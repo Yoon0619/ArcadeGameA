@@ -6,7 +6,9 @@ public class Baseball : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rigidbody;
 
-    [SerializeField] float power;
+    [SerializeField] GameObject joystick;
+
+    Vector3 throwingPoint = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -22,10 +24,14 @@ public class Baseball : MonoBehaviour
 
     void Throwing()
     {
-        //키보드 입력 받아오기
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        throwingPoint.x = joystick.transform.localPosition.x * (-1);
+        throwingPoint.y = joystick.transform.localPosition.y * (-1);
+
+        float throwingPower = joystick.GetComponent<Joystick>().power;
+
+        if (Input.GetMouseButtonUp(0))
         {
-            rigidbody.AddForce(Vector2.up * power * Time.deltaTime);
+            rigidbody.AddForce(throwingPoint * throwingPower * Time.deltaTime);
         }
     }
 
