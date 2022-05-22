@@ -20,17 +20,18 @@ public class GameMgr : MonoBehaviour
 
     [SerializeField] GameObject JoystickRange;
 
+    [SerializeField] GameObject baseball;
+
+    [SerializeField] GameObject glove;
+
     bool gamestart = false;
+
+    List<GameObject> gloveList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        sliderUi.SetActive(false);
-        changeupUi.SetActive(false);
-        MainObj.SetActive(false);
-        Joystick.SetActive(false);
-        JoystickRange.SetActive(false);
-
+        GameSetting();
     }
 
     // Update is called once per frame
@@ -40,12 +41,27 @@ public class GameMgr : MonoBehaviour
             JoystickMove();
     }
 
+    public void GameSetting()
+    {
+        startUi.SetActive(true);
+        gameoverUi.SetActive(true);
+        sliderUi.SetActive(false);
+        changeupUi.SetActive(false);
+        MainObj.SetActive(false);
+        Joystick.SetActive(false);
+        JoystickRange.SetActive(false);
+        gamestart = false;
+        baseball.transform.position = Vector3.zero;
+    }
+
+
     public void StartGame()
     {
         startUi.SetActive(false);
         gameoverUi.SetActive(false);
         MainObj.SetActive(true);
         gamestart = true;
+        GloveMaking();
     }
 
     public void JoystickMove()
@@ -58,6 +74,11 @@ public class GameMgr : MonoBehaviour
             Joystick.transform.localPosition = Vector3.zero;
             Joystick.GetComponent<Joystick>().StartingPoint = Input.mousePosition;
         }
+    }
+
+    void GloveMaking()
+    {
+        Instantiate(glove);
     }
 
 }

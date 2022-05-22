@@ -6,6 +6,8 @@ public class Glove : MonoBehaviour
 {
     [SerializeField] BoxCollider2D boxcollider;
 
+    public bool ballCatch = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,22 @@ public class Glove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
+        if (collision.name == "Baseball")
+        {
+            Rigidbody2D collisionRigidbody;
+            collisionRigidbody = collision.GetComponent<Rigidbody2D>();
+
+            //collision.GetComponent<Baseball>().baseballImageChanging();
+            collisionRigidbody.gravityScale = 0;
+
+            collision.gameObject.transform.position = this.transform.position;
+
+            collisionRigidbody.velocity = Vector3.zero;
+            collisionRigidbody.angularVelocity = 0;
+            collisionRigidbody.Sleep();
+
+            ballCatch = true;
+        }
     }
 
 }

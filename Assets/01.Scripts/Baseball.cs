@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Baseball : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rigidbody;
 
     [SerializeField] GameObject joystick;
+
+    [SerializeField] SpriteRenderer baseballImage;
 
     Vector3 throwingPoint = Vector3.zero;
 
@@ -35,6 +38,20 @@ public class Baseball : MonoBehaviour
         }
     }
 
-
+    public void baseballImageChanging()
+    {
+        if (baseballImage.color == Color.white)
+        {
+            baseballImage.color = Color.red;
+        }
+        else if (baseballImage.color == Color.red)
+        {
+            baseballImage.color = Color.black;
+        }
+        else if (baseballImage.color == Color.black)
+        {
+            baseballImage.color = Color.white;
+        }
+    }
 
 }

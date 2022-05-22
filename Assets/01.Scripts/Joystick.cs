@@ -11,7 +11,11 @@ public class Joystick : MonoBehaviour
 
     [SerializeField] GameObject joystickRangeImage;
 
-    [SerializeField] Text distanceMessage;
+    //[SerializeField] Text distanceMessage;
+
+    [SerializeField] Rigidbody2D baseballRigidbody;
+
+    [SerializeField] GameObject glove;
 
     public Vector3 StartingPoint = new Vector3(720, 1480);
 
@@ -93,6 +97,9 @@ public class Joystick : MonoBehaviour
     {
         joystickImage.SetActive(false);
         joystickRangeImage.SetActive(false);
+        baseballRigidbody.gravityScale = 1;
+        baseballRigidbody.WakeUp();
+        
     }
 
 
