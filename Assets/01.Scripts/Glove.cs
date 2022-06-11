@@ -20,13 +20,6 @@ public class Glove : MonoBehaviour
         
     }
 
-    void Catching()
-    {
-        if (boxcollider.isTrigger == true)
-        {
-
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -42,7 +35,6 @@ public class Glove : MonoBehaviour
 
             collisionRigidbody.velocity = Vector3.zero;
             collisionRigidbody.angularVelocity = 0;
-            collisionRigidbody.Sleep();
 
             ballCatch = true;
         }

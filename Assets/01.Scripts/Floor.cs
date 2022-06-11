@@ -22,7 +22,7 @@ public class Floor : MonoBehaviour
     {
         if (collision.gameObject.name == "Baseball")
         {
-            gameMgr.GameSetting();
+            gameMgr.Gameover();
         }
     }
 

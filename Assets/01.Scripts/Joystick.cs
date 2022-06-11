@@ -11,6 +11,10 @@ public class Joystick : MonoBehaviour
 
     [SerializeField] GameObject joystickRangeImage;
 
+    [SerializeField] GameObject joystickUi;
+
+    [SerializeField] GameMgr gameMgr;
+
     //[SerializeField] Text distanceMessage;
 
     [SerializeField] Rigidbody2D baseballRigidbody;
@@ -95,14 +99,13 @@ public class Joystick : MonoBehaviour
 
     public void EndDrag()
     {
-        joystickImage.SetActive(false);
-        joystickRangeImage.SetActive(false);
+        joystickUi.SetActive(false);
         baseballRigidbody.gravityScale = 1;
-        baseballRigidbody.WakeUp();
-        
+        //baseballRigidbody.WakeUp();
+        gameMgr.ballFlying = true;
     }
 
-
+    /*
     private void OnGUI()
     {
         GUIStyle textcolor = new GUIStyle();
@@ -112,5 +115,5 @@ public class Joystick : MonoBehaviour
         GUI.Label(new Rect(0, 50, 150, 50), string.Format("{0}, {1}", joystickImage.transform.position.x, joystickImage.transform.position.y), textcolor);
         GUI.Label(new Rect(0, 100, 150, 50), string.Format("{0}, {1}", MaximumPoint.x, MaximumPoint.y), textcolor);
     }
-
+    */
 }

@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxcollider: {fileID: -4777192219453690281}
+  ballCatch: 0
