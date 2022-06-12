@@ -38,6 +38,8 @@ public class GameMgr : MonoBehaviour
 
     bool gamestart = false;
 
+    public bool gameover = false;
+
     bool gloveMade = false;
 
     bool gloveMoving = false;
@@ -71,10 +73,7 @@ public class GameMgr : MonoBehaviour
     {
         if (gamestart)
         {
-            if (ballFlying == false && gloveMoving == false)
-            {
-                JoystickMove();
-            }
+            
 
             if (baseball.transform.position == firstGlove.transform.position)
             {
@@ -86,6 +85,15 @@ public class GameMgr : MonoBehaviour
                 GloveMaking();
                 ballFlying = false;
 
+            }
+
+            if (ballFlying == false && gloveMoving == false && gameover == false)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    JoystickMove();
+                    Debug.Log("JoystickMove");
+                }
             }
 
             if (gloveMade)
@@ -106,6 +114,11 @@ public class GameMgr : MonoBehaviour
     public void Gameover()
     {
         gameoverUi.SetActive(true);
+        gamesettingUi.SetActive(true);
+        gameover = true;
+
+        baseball.transform.position = Vector3.zero;
+        baseball.SetActive(false);
     }
 
     public void GameSetting()
@@ -167,6 +180,8 @@ public class GameMgr : MonoBehaviour
         {
             //baseball.GetComponent<Rigidbody2D>().WakeUp();
             joystickUi.SetActive(true);
+
+            //조이스틱 이동
             JoystickRange.transform.position = Input.mousePosition;
             Joystick.transform.localPosition = Vector3.zero;
             Joystick.GetComponent<Joystick>().StartingPoint = Input.mousePosition;
@@ -207,26 +222,68 @@ public class GameMgr : MonoBehaviour
     }
 
 
-    public void GameContinue()
+    public void OnClick_GameContinue()
     {
-        gameoverUi.SetActive(false);
+        //야구공 위치 초기화
         baseball.transform.position = firstGlove.transform.position;
+
+        //UI정리
+        gameoverUi.SetActive(false);
+        gamesettingUi.SetActive(false);
+
+        //변수 초기화
+        gameover = false;
         ballFlying = false;
+
+        //야구공 활성화
+        baseball.SetActive(true);
     }
 
-    public void GameRestart()
+    public void OnClick_GameRestart()
     {
-        gameoverUi.SetActive(false);
+        Debug.Log("GameRestart");
+        /* baseball이 중앙으로 이동
+         * baseball의 힘 모두 제거
+         * 글러브들이 제자리로 이동
+         * 
+         */
+        Rigidbody2D bbrgd2D = baseball.GetComponent<Rigidbody2D>();
+
         //ActivateMainObj(true);
+
+        //글러브 위치 초기화
         firstGlove.transform.position = new Vector3(0, -1.75f);
         secondGlove.transform.position = new Vector3(1, 3.5f);
+
+        //UI정리
+        gameoverUi.SetActive(false);
+        gamesettingUi.SetActive(false);
+
+        //야구공 힘 제거
+        //bbrgd2D.velocity = Vector3.zero;
+        bbrgd2D.angularVelocity = 0;
+        //bbrgd2D.AddForce(Vector3.zero);
+
+        //변수 초기화
         ballFlying = false;
-        baseball.GetComponent<Rigidbody2D>().gravityScale = 0;
+        gameover = false;
+
+        //야구공 중력 재적용
+        //bbrgd2D.gravityScale = 1;
+
+        //야구공 위치 초기화
         baseball.transform.position = Vector3.zero;
-        baseball.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        baseball.GetComponent<Rigidbody2D>().angularVelocity = 0;
-        baseball.GetComponent<Rigidbody2D>().gravityScale = 1;
-        
+
+        //야구공 활성화
+        baseball.SetActive(true);
+
     }
 
+    private void OnGUI()
+    {
+        GUIStyle textcolor = new GUIStyle();
+        textcolor.normal.textColor = Color.black;
+        textcolor.fontSize = 50;
+        GUI.Label(new Rect(0, 0, 150, 50), string.Format("{0}", ballFlying), textcolor);
+    }
 }

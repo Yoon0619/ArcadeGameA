@@ -9,6 +9,8 @@ public class Baseball : MonoBehaviour
 
     [SerializeField] GameObject joystick;
 
+    [SerializeField] GameMgr gameMgr;
+
     [SerializeField] SpriteRenderer baseballImage;
 
     Vector3 throwingPoint = Vector3.zero;
@@ -22,7 +24,11 @@ public class Baseball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Throwing();
+        if (joystick.activeSelf == true)
+        {
+            //Throwing();
+        }
+        
     }
 
     void Throwing()
@@ -35,6 +41,7 @@ public class Baseball : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             rigidbody.AddForce(throwingPoint * throwingPower * Time.deltaTime);
+            Debug.Log("AddForce");
         }
     }
 

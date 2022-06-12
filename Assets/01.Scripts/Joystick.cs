@@ -99,10 +99,19 @@ public class Joystick : MonoBehaviour
 
     public void EndDrag()
     {
+        Debug.Log("EndDrag");
         joystickUi.SetActive(false);
         baseballRigidbody.gravityScale = 1;
         //baseballRigidbody.WakeUp();
         gameMgr.ballFlying = true;
+        Debug.Log("true");
+
+        Vector3 throwingPoint = Vector3.zero;
+
+        throwingPoint.x = this.transform.localPosition.x * (-1);
+        throwingPoint.y = this.transform.localPosition.y * (-1);
+
+        baseballRigidbody.AddForce(throwingPoint * power * Time.deltaTime);
     }
 
     /*
