@@ -79,6 +79,10 @@ public class GameMgr : MonoBehaviour
             {
                 ballFlying = false;
             }
+            else
+            {
+                ballFlying = true;
+            }
 
             if (baseball.transform.position == secondGlove.transform.position)
             {
@@ -92,7 +96,7 @@ public class GameMgr : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     JoystickMove();
-                    Debug.Log("JoystickMove");
+                    //Debug.Log("JoystickMove");
                 }
             }
 
