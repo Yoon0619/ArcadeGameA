@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
+using UnityEngine.UI;
 //using System.Windows.Forms;
 //using UnityEngine.Windows.Forms;
 
@@ -17,6 +17,8 @@ public class GameMgr : MonoBehaviour
 
     [SerializeField] GameObject gamesettingUi;
 
+    [SerializeField] GameObject scoreUi;
+
     [SerializeField] GameObject MainObj;
 
     [SerializeField] GameObject Joystick;
@@ -24,6 +26,10 @@ public class GameMgr : MonoBehaviour
     [SerializeField] GameObject JoystickRange;
 
     [SerializeField] GameObject baseball;
+
+    [SerializeField] Text scoreText;
+
+    [SerializeField] Text bestscoreText;
 
     //[SerializeField] GameObject glove;
 
@@ -45,6 +51,10 @@ public class GameMgr : MonoBehaviour
     bool gloveMoving = false;
 
     public bool ballFlying = false;
+
+    public int score = 0;
+
+    public int bestscore = 0;
 
     float yDecrease = 0;
 
@@ -86,6 +96,7 @@ public class GameMgr : MonoBehaviour
 
             if (baseball.transform.position == secondGlove.transform.position)
             {
+                score++;
                 GloveMaking();
                 ballFlying = false;
 
@@ -113,6 +124,8 @@ public class GameMgr : MonoBehaviour
             }
 
         }
+
+        scoreText.text = score.ToString();
     }
 
     public void Gameover()
@@ -123,6 +136,13 @@ public class GameMgr : MonoBehaviour
 
         baseball.transform.position = Vector3.zero;
         baseball.SetActive(false);
+
+        if (score > bestscore)
+        {
+            bestscore = score;
+            bestscoreText.text = bestscore.ToString();
+        }
+        
     }
 
     public void GameSetting()
@@ -130,6 +150,8 @@ public class GameMgr : MonoBehaviour
         ActivateStartUi(true);
 
         joystickUi.SetActive(false);
+
+        scoreUi.SetActive(false);
 
         gamesettingUi.SetActive(true);
 
@@ -167,11 +189,15 @@ public class GameMgr : MonoBehaviour
 
     public void OnClick_StartGame()
     {
+        score = 0;
+
         startUi.SetActive(false);
 
         gameoverUi.SetActive(false);
 
         gamesettingUi.SetActive(false);
+
+        scoreUi.SetActive(true);
 
         ActivateMainObj(true);
 
@@ -280,6 +306,10 @@ public class GameMgr : MonoBehaviour
 
         //야구공 활성화
         baseball.SetActive(true);
+
+        //점수 정리
+        bestscore = score;
+        score = 0;
 
     }
 
